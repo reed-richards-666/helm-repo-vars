@@ -1,0 +1,36 @@
+apiVersion: v1
+entries:
+  admin-ui:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-07-12T16:35:42.0371272+05:30"
+    description: A Helm chart for Kubernetes
+    digest: a331332402202a3b945f3344cd43900a892e5cd1e18d091287b04545502b885f
+    name: admin-ui
+    type: application
+    urls:
+    - admin-ui-0.1.0.tgz
+    version: 0.1.0
+  api:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-07-12T16:35:42.037654+05:30"
+    description: A Helm chart for Kubernetes
+    digest: 3baf9c6140d0aafd649ddf925bb2493d7cec77a78ee2bf3a76400595cc671b2f
+    name: api
+    type: application
+    urls:
+    - api-0.1.0.tgz
+    version: 0.1.0
+  chatbot-ui:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-07-12T16:35:42.03821+05:30"
+    description: A Helm chart for Kubernetes
+    digest: 442fbec6cb993b90731f8bb64caea308207072b60c2552d9fa3589531dcfbcba
+    name: chatbot-ui
+    type: application
+    urls:
+    - chatbot-ui-0.1.0.tgz
+    version: 0.1.0
+generated: "2023-07-12T16:35:42.0371272+05:30"

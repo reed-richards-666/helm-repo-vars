@@ -21,8 +21,8 @@ environment_secret_vars:
     key: VITE_SUPERSET_DOMAIN
 
 environment_vars:
-  -name: test
-   value: Test
+  - name: test
+    value: Test
 # image: ${NEW_IMAGE_TAG}
 image: registry.hub.docker.com/leapfrogvalley/control-gpt-admin:development-30-05-2023.1
 imagePullPolicy: "IfNotPresent"

@@ -1,0 +1,112 @@
+create_deployment: true
+namespace: test-templates
+deploymentName: custodian-api
+containerName: custodian-api
+
+environment_secret_vars:
+  - name: PG_HOST
+    key: PG_HOST
+  - name: PG_PORT
+    key: PG_PORT
+  - name: PG_USER
+    key: PG_USER
+  - name: PG_PASSWORD
+    key: PG_PASSWORD
+  - name: PG_DB
+    key: PG_DB
+  - name: OIDC_CLIENT_ID
+    key: OIDC_CLIENT_ID
+  - name: OIDC_CLIENT_SECRET
+    key: OIDC_CLIENT_SECRET
+  - name: OIDC_AUTH_URI
+    key: OIDC_AUTH_URI
+  - name: OIDC_USERINFO_URI
+    key: OIDC_USERINFO_URI
+  - name: OIDC_TOKEN_URI
+    key: OIDC_TOKEN_URI
+  - name: OIDC_TOKEN_INTROSPECTION_URI
+    key: OIDC_TOKEN_INTROSPECTION_URI
+  - name: OIDC_ISSUER
+    key: OIDC_ISSUER
+  - name: OIDC_SCOPE
+    key: OIDC_SCOPE
+  - name: SUPERSET_URL
+    key: SUPERSET_URL
+  - name: SUPERSET_DASHBOARDID
+    key: SUPERSET_DASHBOARDID
+  - name: SUPERSET_ADMIN_USERNAME
+    key: SUPERSET_ADMIN_USERNAME
+  - name: SUPERSET_ADMIN_PASSWORD
+    key: SUPERSET_ADMIN_PASSWORD
+  - name: SUPERSET_GUEST_USER_FIRST_NAME
+    key: SUPERSET_GUEST_USER_FIRST_NAME
+  - name: SUPERSET_GUEST_USER_LAST_NAME
+    key: SUPERSET_GUEST_USER_LAST_NAME
+  - name: SUPERSET_GUEST_USER_USERNAME
+    key: SUPERSET_GUEST_USER_USERNAME
+  - name: KEYCLOAK_URL
+    key: KEYCLOAK_URL
+  - name: KEYCLOAK_REALM
+    key: KEYCLOAK_REALM
+  - name: KEYCLOAK_ADMIN_USERNAME
+    key: KEYCLOAK_ADMIN_USERNAME
+  - name: KEYCLOAK_ADMIN_PASSWORD
+    key: KEYCLOAK_ADMIN_PASSWORD
+  - name: MONGO_DB_NAME
+    key: MONGO_DB_NAME
+  - name: PG_SCHEMA
+    key: PG_SCHEMA
+  - name: OPEN_AI_API_KEY
+    key: OPEN_AI_API_KEY
+  - name: MONGO_URI
+    key: MONGO_URI
+  
+ 
+
+image: registry.hub.docker.com/leapfrogvalley/control-gpt-backend:CiCdTest-24-05-2023.2
+imagePullPolicy: "IfNotPresent"
+
+spec:
+  replicas: 1
+  name: container-0
+   
+ingress:
+  enabled: true
+  rewritePath: /$2
+  hosts:
+    - host: chat.dev.ai-guardrails.com
+      paths:
+        - path: /api
+          pathType: Prefix
+          backend:
+            service:
+              name: custodian-api 
+              port:
+                number: 8080
+  tls:
+    - hosts:
+        - chat.dev.ai-guardrails.com
+      secretName: dev-ai-guardrails-manual
+
+containerPort: 8080
+protocol: TCP
+
+service:
+    port: 8080
+    type: ClusterIP
+
+
+autoscaling:
+  enabled: false
+
+livenessProbe:
+  enabled: false
+
+readinessProbe:
+  enabled: false
+
+volumes:
+  enabled: false
+
+persistentVolume:
+  enabled: false

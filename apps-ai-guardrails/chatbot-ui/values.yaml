@@ -1,0 +1,65 @@
+create_deployment: false
+namespace: test-templates
+deploymentName: custodian-chatbot-ui
+containerName: custodian-chatbot-ui
+
+environment_secret_vars:
+  - name: VITE_CHAT_SERVICE_URL
+    key: VITE_CHAT_SERVICE_URL
+  - name: VITE_KEYCLOAK_URI
+    key: VITE_KEYCLOAK_URI
+  - name: VITE_KEYCLOAK_CLIENT
+    key: VITE_KEYCLOAK_CLIENT
+  - name: VITE_KEYCLOAK_REALM 
+    key: VITE_KEYCLOAK_REALM
+  - name: VITE_APPLICATION_NAME
+    key: VITE_APPLICATION_NAME
+ 
+
+image: registry.hub.docker.com/leapfrogvalley/control-gpt-frontend:CiCdTest-24-05-2023.1
+imagePullPolicy: "IfNotPresent"
+
+spec:
+  replicas: 1
+  name: container-0
+   
+ingress:
+  enabled: true
+  rewritePath: /$2
+  hosts:
+    - host: chat.dev.ai-guardrails.com
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: custodian-chatbot-ui
+              port:
+                number: 3000
+  tls:
+    - hosts:
+        - chat.dev.ai-guardrails.com
+      secretName: dev-ai-guardrails-manual
+
+containerPort: 3000
+protocol: TCP
+
+service:
+    port: 3000
+    type: ClusterIP
+
+
+autoscaling:
+  enabled: false
+
+livenessProbe:
+  enabled: false
+
+readinessProbe:
+  enabled: false
+
+volumes:
+  enabled: false
+
+persistentVolume:
+  enabled: false
